@@ -29,7 +29,7 @@ This guide covers **only the basics**.
 
 ---
 
-## 2. Installation (Beginner Friendly)
+### 2. Installation (Beginner Friendly)
 
 ### **Windows**
 1. Download:  
@@ -59,6 +59,22 @@ sudo apt install yt-dlp
 Or:
 ```bash
 pip3 install -U yt-dlp
+```
+
+### ⚠ Linux package managers (apt, dnf, etc.) may be outdated
+Most distro repositories (Ubuntu/Debian/Fedora) **update yt-dlp very slowly**, sometimes several months behind.
+For the newest version, prefer:
+```bash
+curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o yt-dlp
+chmod +x yt-dlp
+sudo mv yt-dlp /usr/local/bin/
+```
+Or install with pip:
+```bash
+pip3 install -U yt-dlp
+```
+
+Arch Linux users (pacman) usually get up‑to‑date builds.
 ```
 
 ---
@@ -333,6 +349,37 @@ yt-dlp -S "ext:webm" "<URL>"
 MP4:
 ```bash
 yt-dlp -S "ext:mp4" "<URL>"
+```
+
+## 6.1 Using Proxy / VPN (for users who cannot access YouTube)
+Many users live in regions where YouTube cannot be accessed normally. yt-dlp supports proxies:
+
+### Basic HTTP/HTTPS proxy
+```bash
+yt-dlp --proxy "http://127.0.0.1:8080" "<URL>"
+```
+
+### SOCKS proxy (common in VPN tools)
+```bash
+yt-dlp --proxy "socks5://127.0.0.1:1080" "<URL>"
+```
+
+### What is 127.0.0.1 and the port?
+- `127.0.0.1` = *localhost*, meaning the VPN/proxy runs on your own computer.
+- The port (`8080`, `1080`, etc.) depends on your VPN or proxy software.
+
+### How to find the correct port?
+Most VPN apps list their “local proxy port” in:
+- settings → advanced → proxy
+- or documentation
+Examples:
+- Clash/ClashX: 7890 (HTTP), 7891 (SOCKS)
+- Shadowsocks: 1080 (SOCKS5)
+- Some VPN apps: 8080
+
+### Verify proxy works
+```bash
+yt-dlp --proxy "http://127.0.0.1:8080" --geo-bypass "<URL>"
 ```
 
 ---
