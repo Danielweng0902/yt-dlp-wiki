@@ -6,8 +6,11 @@ This guide is designed for beginners who want to **install yt-dlp**, **download 
 For advanced usage, see the main README and the Wiki.
 
 **Helpful Wiki Pages for Beginners:**  
-- [FAQ — Common Misunderstandings]( https://github.com/yt-dlp/yt-dlp-wiki/blob/master/FAQ.md )  
-- [Installation Guide]( https://github.com/yt-dlp/yt-dlp-wiki/blob/master/Installation.md )  
+- [FAQ — Common Misunderstandings](https://github.com/yt-dlp/yt-dlp-wiki/blob/master/FAQ.md)  
+- [Installation Guide](https://github.com/yt-dlp/yt-dlp-wiki/blob/master/Installation.md)  
+
+> This page is a quick-start guide only.
+> For authoritative, complete documentation, please refer to the main README.
 
 ---
 
@@ -17,7 +20,7 @@ yt-dlp is a command-line downloader for **videos and audio** from **YouTube** an
 
 It features:
 
-- Best-quality download  
+- Video and audio download from supported sites
 - Subtitles  
 - Playlist support  
 - SponsorBlock integration  
@@ -29,12 +32,15 @@ This guide covers **only the basics**.
 
 ---
 
-### 2. Installation (Beginner Friendly)
+## 2. Installation (Beginner Friendly)
 
 ### **Windows**
+
 1. Download:  
    https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe  
+
 2. Run:
+
 ```bash
 yt-dlp.exe "<URL>"
 ```
@@ -53,155 +59,49 @@ pip3 install -U yt-dlp
 ---
 
 ### **Linux**
+
 ```bash
 sudo apt install yt-dlp
 ```
+
 Or:
+
 ```bash
 pip3 install -U yt-dlp
 ```
 
-### ⚠ Linux package managers (apt, dnf, etc.) may be outdated
-Most distro repositories (Ubuntu/Debian/Fedora) **update yt-dlp very slowly**, sometimes several months behind.
-For the newest version, prefer:
+### Linux package managers (apt, dnf, etc.) may be outdated
+
+Some distributions may **not package the latest version**.  
+If you need the newest release, install via pip or the standalone binary:
+
 ```bash
+
 curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o yt-dlp
+
 chmod +x yt-dlp
+
 sudo mv yt-dlp /usr/local/bin/
+
 ```
+
 Or install with pip:
+
 ```bash
+
 pip3 install -U yt-dlp
+
 ```
 
 Arch Linux users (pacman) usually get up‑to‑date builds.
-```
 
----
 
-## 2.1 Installation Troubleshooting (PATH, curl, .profile, config directory)
-
-Many beginners struggle with installation because some steps that are “obvious” to developers are *not obvious at all*.  
-This section addresses the most common issues.
-
----
-
-### A. “yt-dlp: command not found”
-This means your system cannot find the program.  
-You must add yt-dlp to your **PATH**.
-
-### macOS / Linux
-If you downloaded the binary manually:
-
-```bash
-chmod +x yt-dlp
-sudo mv yt-dlp /usr/local/bin/
-```
-
-If you installed with pip:
-
-```bash
-pip3 install -U yt-dlp
-```
-
-If the command still does not work:
-
-```bash
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
-source ~/.profile
-```
-
----
-
-### B. Understanding `.profile` and PATH
-Your shell only searches folders listed in `PATH`.
-
-View your current PATH:
-```bash
-echo $PATH
-```
-
-If yt-dlp is not inside any listed folder, add it manually:
-
-```bash
-echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.profile
-source ~/.profile
-```
-
----
-
-### C. “curl command not found” (macOS / Linux)
-Install curl:
-
-macOS:
-```bash
-brew install curl
-```
-
-Ubuntu:
-```bash
-sudo apt install curl
-```
-
----
-
-### D. Installing with curl (full example)
-Many beginners do not know how to use `curl`.  
-Here is a working example:
-
-```bash
-curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
-    -o yt-dlp
-chmod +x yt-dlp
-sudo mv yt-dlp /usr/local/bin/
-```
-
-You can now run:
-```bash
-yt-dlp "<URL>"
-```
-
----
-
-### E. Where to place the configuration file (`yt-dlp.conf`)
-Beginners are often confused about where the config file belongs.
-
-Use:
-
-**Linux / macOS**  
-```
-~/.config/yt-dlp/config
-```
-
-**Windows**  
-```
-%APPDATA%\yt-dlp\config.txt
-```
-
-Create the folder manually if it does not exist.
-
-You may place default options there, for example:
-
-```
---embed-subs
---embed-metadata
---sponsorblock-remove all
-```
-
-yt-dlp will use these options **automatically** every time.
-
----
-
-### F. Verify installation
-```bash
-yt-dlp --version
-```
-
-If this prints a version number, installation succeeded.
+> If the command cannot be found, ensure that the installation directory is in PATH.
+> See [Installation.md](https://github.com/yt-dlp/yt-dlp-wiki/blob/master/Installation.md) for platform-specific notes.
 
 ## 3. First Steps — Basic Commands
 
-These commands cover **90% of beginner use cases**.
+These commands cover the commonly used basic operations.
 
 ### Download a video
 ```bash
@@ -247,12 +147,13 @@ yt-dlp --embed-subs "<URL>"
 yt-dlp --sponsorblock-remove all "<URL>"
 ```
 
-### Use browser cookies (age-restricted videos)
-```bash
-yt-dlp --cookies-from-browser chrome "<URL>"
-```
 
-### Custom output filename
+### Custom Output Filenames
+yt-dlp supports output templates.  
+Beginners who want customized filenames should refer to the “Output Template” section of the main [README](https://github.com/yt-dlp/yt-dlp/blob/master/README.md).
+
+Example:
+
 ```bash
 yt-dlp -o "%(title)s.%(ext)s" "<URL>"
 ```
@@ -263,8 +164,8 @@ yt-dlp -o "%(title)s.%(ext)s" "<URL>"
 
 | Purpose | Command |
 |--------|---------|
-| Best MP4 | `yt-dlp -S "ext:mp4" "<URL>"` |
-| Best audio (mp3) | `yt-dlp -x --audio-format mp3 "<URL>"` |
+| Download MP4 formats | `yt-dlp -S "ext:mp4" "<URL>"` |
+| Convert to mp3 | `yt-dlp -x --audio-format mp3 "<URL>"` |
 | Playlist | `yt-dlp "<playlist>"` |
 | Get subtitles | `yt-dlp --write-subs "<URL>"` |
 | Show formats | `yt-dlp -F "<URL>"` |
@@ -272,9 +173,9 @@ yt-dlp -o "%(title)s.%(ext)s" "<URL>"
 
 ---
 
-## 6 Common Download Scenarios (YouTube, Livestreams, Members-only, Subtitles, Quality)
+## 6. Common Download Scenarios (YouTube, Livestreams, Members-only, Subtitles, Quality)
 
-### YouTube — Best Quality MP4
+### YouTube — Select MP4 formats (when available)
 ```bash
 yt-dlp -S "res,ext:mp4" "<YouTube URL>"
 ```
@@ -296,7 +197,11 @@ yt-dlp -x --audio-format mp3 "<YouTube URL>"
 yt-dlp "<live URL>"
 ```
 
-### ivestream — Start from Beginning (if supported)
+### Livestream — Attempt to Start from Beginning
+Some sites provide a rewindable buffer for livestreams.  
+
+`--live-from-start` is supported only by a small number of extractors that provide a rewindable buffer.
+
 ```bash
 yt-dlp --live-from-start "<live URL>"
 ```
@@ -304,16 +209,28 @@ yt-dlp --live-from-start "<live URL>"
 ---
 
 ### Members-only Video (Age-restricted / Private / Channel Membership)
-> Requires browser cookies.
+
+These require authentication. The most common method is using browser cookies.
+
+Note:
+
+- Cookie extraction is **not supported on all platforms** (e.g., limited support on Windows).
+
+- Chrome-based extraction has limited support on Windows; see the [README](https://github.com/yt-dlp/yt-dlp/blob/master/README.md) for platform notes.  
+
+- Users who need more information about cookies should refer to the “Authentication” section of the main [README](https://github.com/yt-dlp/yt-dlp/blob/master/README.md).
+
+
+Example:
 
 ```bash
-yt-dlp --cookies-from-browser chrome "<YouTube Members-only URL>"
+yt-dlp --cookies-from-browser firefox "<YouTube Members-only URL>"
 ```
 
 If multiple profiles exist:
 
 ```bash
-yt-dlp --cookies-from-browser "chrome:Profile 1" "<URL>"
+yt-dlp --cookies-from-browser "firefox:Profile 1" "<URL>"
 ```
 
 ---
@@ -323,7 +240,9 @@ yt-dlp --cookies-from-browser "chrome:Profile 1" "<URL>"
 yt-dlp --skip-download --write-subs "<URL>"
 ```
 
-### Download Auto-generated Subtitles
+### Auto-generated Subtitles (if provided by the site)
+Some sites provide auto-generated subtitles; some do not.
+
 ```bash
 yt-dlp --write-auto-subs "<URL>"
 ```
@@ -351,35 +270,16 @@ MP4:
 yt-dlp -S "ext:mp4" "<URL>"
 ```
 
-## 6.1 Using Proxy / VPN (for users who cannot access YouTube)
-Many users live in regions where YouTube cannot be accessed normally. yt-dlp supports proxies:
+## 6.1 Using a Proxy (optional)
 
-### Basic HTTP/HTTPS proxy
+yt-dlp can use a proxy:
+
+HTTP:
+
 ```bash
 yt-dlp --proxy "http://127.0.0.1:8080" "<URL>"
 ```
-
-### SOCKS proxy (common in VPN tools)
-```bash
-yt-dlp --proxy "socks5://127.0.0.1:1080" "<URL>"
-```
-
-### What is 127.0.0.1 and the port?
-- `127.0.0.1` = *localhost*, meaning the VPN/proxy runs on your own computer.
-- The port (`8080`, `1080`, etc.) depends on your VPN or proxy software.
-
-### How to find the correct port?
-Most VPN apps list their “local proxy port” in:
-- settings → advanced → proxy
-- or documentation
-Examples:
-- Clash/ClashX: 7890 (HTTP), 7891 (SOCKS)
-- Shadowsocks: 1080 (SOCKS5)
-- Some VPN apps: 8080
-
-### Verify proxy works
-```bash
-yt-dlp --proxy "http://127.0.0.1:8080" --geo-bypass "<URL>"
+For more information, see the [FAQ](https://github.com/yt-dlp/yt-dlp-wiki/blob/master/FAQ.md)
 ```
 
 ---
@@ -404,15 +304,7 @@ Windows: download from the official FFmpeg website.
 ---
 
 ### Unsupported URL
-Check supported sites:  
-https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md
-
----
-
-### Slow download
-```bash
-yt-dlp --concurrent-fragments 8 "<URL>"
-```
+Check supported sites: [supportedsites.md](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
 
 ---
 
@@ -423,18 +315,26 @@ yt-dlp --list-subs "<URL>"
 
 ---
 
+### Slow download
+
+> See [FAQ](https://github.com/yt-dlp/yt-dlp-wiki/blob/master/FAQ.md) for notes about download speed.
+
+---
+
+---
+
 ## 8. Tips for New Users
 
-✔ Always wrap URLs in quotes  
-✔ Use `-v` for debugging  
+* Always wrap URLs in quotes  
+Use `-v` for debugging  
 ```bash
 yt-dlp -v "<URL>"
 ```
-✔ Choose a download folder:
+* Choose a download folder:
 ```bash
 yt-dlp -P "~/Downloads" "<URL>"
 ```
-✔ Put yt-dlp in PATH to use it anywhere  
+* Put yt-dlp in PATH to use it anywhere  
 
 ---
 
@@ -449,58 +349,7 @@ Read the main README if you need:
 - Authentication  
 - Plugins  
 
-This beginner guide is **not** meant to replace the full documentation.
+
+> This beginner guide is **not** meant to replace the full documentation.
 
 ---
-
-## 10. Top 10 Beginner Mistakes (and how to avoid them)
-
-1. **Not installing ffmpeg**  
-   yt-dlp can download videos without it, but cannot merge formats or extract audio.  
-   → Install ffmpeg early.
-
-2. **Forgetting to use quotes around URLs**  
-```bash
-yt-dlp https://youtu.be/...   # ❌ wrong on some shells
-```
-```bash
-yt-dlp "https://youtu.be/..." # ✔ correct
-```
-
-3. **Confusing “format code” with “resolution text”**  
-Use `yt-dlp -F "<URL>"` to get actual codes like `137`, not “1080p”.
-
-4. **Expecting MP4 when YouTube only provides WebM**  
-Some qualities only exist in WebM.  
-→ Use: `-S "ext:mp4"` to force MP4 selection.
-
-5. **Using outdated `youtube-dl` flags**  
-yt-dlp syntax differs in some areas—always check README sections “Differences in Default Behavior”.
-
-6. **Thinking audio-only downloads include thumbnails**  
-`-x` extracts only audio; thumbnails require: `--embed-thumbnail`.
-
-7. **Expecting auto-generated subtitles for every site**  
-Some websites do *not* provide auto captions.  
-→ Check with: `--list-subs`.
-
-8. **Not understanding why Members-only videos fail**  
-These require authenticated cookies.  
-→ Use: `--cookies-from-browser chrome`.
-
-9. **Expecting livestream rewind when the platform does not support it**  
-`--live-from-start` works only when the platform offers a full timeline buffer.
-
-10. **Overwriting files unintentionally**  
-Use custom output templates:  
-```bash
-yt-dlp -o "%(title)s-%(id)s.%(ext)s"
-```
-
----
-
-## 11. About This Guide
-
-This guide helps new users start quickly **without being overwhelmed**.  
-It intentionally keeps things simple.  
-Contributions for clarity or more examples are welcome.
